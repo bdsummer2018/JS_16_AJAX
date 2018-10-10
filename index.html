@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script>
+        class Ajax{
+            static get(url,onresponse,onerror){
+                let xhr = new XMLHttpRequest();
+                xhr.open("GET",url,true);
+                xhr.onreadystatechange =()=>{
+                    if(xhr.readyState!==4) return;
+                    if(xhr.status===200)
+                        onresponse(xhr.responseText);
+                    else if(onerror)
+                        onerror(xhr.status,xhr.statusText);
+                };
+                xhr.send();
+            }
+            static post(url,params,onresponse,onerror){
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST",url,true);
+                xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+                xhr.onreadystatechange =()=>{
+                    if(xhr.readyState!==4) return;
+                    if(xhr.status===200)
+                        onresponse(xhr.responseText);
+                    else if(onerror)
+                        onerror(xhr.status,xhr.statusText);
+                };
+                let _params = [];
+                for(let key in params){
+                    _params.push(key+"="+encodeURIComponent(params[key]));
+                }
+                let body = _params.join("&");
+                xhr.send(body);
+            }
+
+        }
+
+
+
+
+        // Ajax.get("https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5",(response)=>{
+        //     let data = JSON.parse(response);
+        //
+        //     data.forEach(obj=>{
+        //         document.write(obj.ccy+" -&gt; "+obj.buy+obj.base_ccy+"<br>")
+        //     })
+        // })
+
+        Ajax.post("http://pdfstep.zzz.com.ua?action=user&method=add",{name:"qwedsvasd"},(r)=>{
+            alert(r);
+        })
+
+
+    </script>
+
+
+</head>
+<body>
+
+</body>
+</html>
